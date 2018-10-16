@@ -7,6 +7,8 @@ else ifeq ($(UNAME_S),MINGW32_NT-6.1)
 	LDFLAGS += -static-libgcc -LC:\OpenSSL-1.0.2j-mingw\lib -lwsock32 -o bitmsghash32.dll -Wl,--out-implib,bitmsghash.a
 else
 	LDFLAGS += -lpthread -o bitmsghash.so
+	CCFLAGS=arm-linux-androideabi-g++
+
 endif
    	
 all: bitmsghash.so
