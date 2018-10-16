@@ -146,7 +146,7 @@ extern "C" EXPORT unsigned long long BitmessagePOW(unsigned char * starthash, un
 #   else
 		pthread_create(&threads[i], NULL, threadfunc, (void*)&threaddata[i]);
 #   ifdef __linux__
-		pthread_setschedparam(threads[i], SCHED_IDLE, &schparam);
+		pthread_setschedparam(threads[i], 0, &schparam);
 #   else
 		pthread_setschedparam(threads[i], SCHED_RR, &schparam);
 #   endif
