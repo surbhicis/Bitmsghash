@@ -18,7 +18,7 @@ bitmsghash.so: bitmsghash.o
 	${CXX} bitmsghash.o -shared -fPIC -lcrypto $(LDFLAGS)
 
 bitmsghash.o:
-	${CXX} -Wall -O3 -march=native -fPIC $(CCFLAGS) -c bitmsghash.cpp
+	${CXX} -Wall -O3 -march=armv7e-m -fPIC $(CCFLAGS) -c bitmsghash.cpp
 
 clean:
 	rm -f bitmsghash.o bitmsghash.so bitmsghash*.dll
