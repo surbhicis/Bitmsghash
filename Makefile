@@ -7,8 +7,8 @@ else ifeq ($(UNAME_S),MINGW32_NT-6.1)
 	LDFLAGS += -static-libgcc -LC:\OpenSSL-1.0.2j-mingw\lib -lwsock32 -o bitmsghash32.dll -Wl,--out-implib,bitmsghash.a
 else
 	LDFLAGS += -lpthread -o bitmsghash.so
-	CCFLAGS +=-I/home/cis/Downloads/android-ndk-r10e/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/
-	CCFLAGS +=-I/usr/include/openssl/
+	# CCFLAGS +=-I/home/cis/Downloads/android-ndk-r10e/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/
+	# CCFLAGS +=-I/usr/include/openssl/
 endif
    	
 all: bitmsghash.so
