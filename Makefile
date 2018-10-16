@@ -15,7 +15,7 @@ powtest:
 	./testpow.py
 
 bitmsghash.so: bitmsghash.o
-	${CXX} bitmsghash.o -shared -fPIC -lcrypto -lssl $(LDFLAGS)
+	${CXX} bitmsghash.o -shared -fPIC -lcrypto $(LDFLAGS)
 
 bitmsghash.o:
 	${CXX} -Wall -O3 -march=armv2a -fPIC $(CCFLAGS) -c bitmsghash.cpp
