@@ -8,7 +8,7 @@ else ifeq ($(UNAME_S),MINGW32_NT-6.1)
 else
 	LDFLAGS += -lpthread -o bitmsghash.so
 	CCFLAGS +=-I/home/cis/Downloads/android-ndk-r10e/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/
-	CCFLAGS +=-I/home/cis/Desktop/Mobileandroid/peter_android/PyBitmessage/src/.buildozer/android/platform/build/build/other_builds/openssl 
+	CCFLAGS +=-I/usr/include/openssl/
 endif
    	
 all: bitmsghash.so
