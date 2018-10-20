@@ -6,20 +6,20 @@ else ifeq ($(UNAME_S),MINGW32_NT-6.1)
 	CCFLAGS += -IC:\OpenSSL-1.0.2j-mingw\include -D_WIN32 -march=native
 	LDFLAGS += -static-libgcc -LC:\OpenSSL-1.0.2j-mingw\lib -lwsock32 -o bitmsghash32.dll -Wl,--out-implib,bitmsghash.a
 else
-	LDFLAGS += -o bitmsghash.so
+	LDFLAGS += -o libbitmsghash.so
 endif
    	
-all: bitmsghash.so
+all: libbitmsghash.so
 
 powtest:
 	./testpow.py
 
-bitmsghash.so: bitmsghash.o
+libbitmsghash.so: bitmsghash.o
 	${CXX} bitmsghash.o -shared -fPIC -lcrypto $(LDFLAGS)
 
 bitmsghash.o:
 	${CXX} -Wall -O3 -march=armv2a -fPIC $(CCFLAGS) -c bitmsghash.cpp
 
 clean:
-	rm -f bitmsghash.o bitmsghash.so bitmsghash*.dll
+	rm -f bitmsghash.o libbitmsghash.so bitmsghash*.dll
 
