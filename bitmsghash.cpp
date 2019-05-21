@@ -78,6 +78,7 @@ void getnumthreads()
 #ifdef _WIN32
 	DWORD_PTR dwProcessAffinity, dwSystemAffinity;
 #elif __linux__
+	printf("I am in Linus *************************** 81 ");
 	// cpu_set_t dwProcessAffinity;
 #elif __OpenBSD__
 	int mib[2], core_count = 0;
@@ -136,9 +137,10 @@ void getnumthreads()
 extern "C" EXPORT unsigned long long BitmessagePOW(unsigned char * starthash, unsigned long long target)
 {
 	successval = 0;
+	printf("max_val Line 139 debug please******************************");
 	max_val = target;
 	getnumthreads();
-	printf("At line 138 *************************************\n");
+	printf("At line 138 *************************************");
 	initialHash = (unsigned char *)starthash;
 #   ifdef _WIN32
 	HANDLE* threads = (HANDLE*)calloc(sizeof(HANDLE), numthreads);
@@ -168,9 +170,10 @@ extern "C" EXPORT unsigned long long BitmessagePOW(unsigned char * starthash, un
 	for (unsigned int i = 0; i < numthreads; i++) {
 		pthread_join(threads[i], NULL);
 	}
-	printf("In else part against WIN32 ******************************\n");
+	printf("In else part against WIN32 ******************************");
 #   endif
 	free(threads);
 	free(threaddata);
+	printf("End at line 176 ******************************* ");
 	return successval;
 }
