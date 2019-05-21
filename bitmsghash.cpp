@@ -107,12 +107,12 @@ void getnumthreads()
 #else
 	if (sysctlbyname("hw.logicalcpu", &core_count, &len, 0, 0) == 0)
 	{
-		printf("Inside sysctlbyname at line 106 *********************\n");
+		printf("Inside sysctlbyname at line 106 *********************");
 		numthreads = core_count;
 	}
 	else if (sysctlbyname("hw.ncpu", &core_count, &len, 0, 0) == 0)
 	{
-		printf("Inside sysctlbyname at line 111 *********************\n");
+		printf("Inside sysctlbyname at line 111 *********************");
 		numthreads = core_count;
 	}
 #endif
