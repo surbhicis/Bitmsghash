@@ -102,9 +102,15 @@ void getnumthreads()
 		numthreads = core_count;
 #else
 	if (sysctlbyname("hw.logicalcpu", &core_count, &len, 0, 0) == 0)
+	{
+		printf("Inside sysctlbyname at line 106 *********************\n");
 		numthreads = core_count;
+	}
 	else if (sysctlbyname("hw.ncpu", &core_count, &len, 0, 0) == 0)
+	{
+		printf("Inside sysctlbyname at line 111 *********************\n");
 		numthreads = core_count;
+	}
 #endif
 // 	for (unsigned int i = 0; i < len * 8; i++)
 // #if defined(_WIN32)
@@ -129,6 +135,7 @@ extern "C" EXPORT unsigned long long BitmessagePOW(unsigned char * starthash, un
 	successval = 0;
 	max_val = target;
 	getnumthreads();
+	printf("At line 138 *************************************\n");
 	initialHash = (unsigned char *)starthash;
 #   ifdef _WIN32
 	HANDLE* threads = (HANDLE*)calloc(sizeof(HANDLE), numthreads);
@@ -158,6 +165,7 @@ extern "C" EXPORT unsigned long long BitmessagePOW(unsigned char * starthash, un
 	for (unsigned int i = 0; i < numthreads; i++) {
 		pthread_join(threads[i], NULL);
 	}
+	printf("In else part against WIN32 ******************************\n");
 #   endif
 	free(threads);
 	free(threaddata);
