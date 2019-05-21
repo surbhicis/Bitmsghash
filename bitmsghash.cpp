@@ -94,6 +94,9 @@ void getnumthreads()
 	GetProcessAffinityMask(GetCurrentProcess(), &dwProcessAffinity, &dwSystemAffinity);
 #elif __linux__
 	// sched_getaffinity(0, len, &dwProcessAffinity);
+	{
+		printf("In else part against linux 98******************************");
+	}
 #elif __OpenBSD__
 	len2 = sizeof(core_count);
 	mib[0] = CTL_HW;
