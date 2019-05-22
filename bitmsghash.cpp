@@ -79,7 +79,7 @@ void getnumthreads()
 	DWORD_PTR dwProcessAffinity, dwSystemAffinity;
 #elif __linux__
 	printf("I am in Linus *************************** 81 \n");
-	// cpu_set_t dwProcessAffinity;
+	cpu_set_t dwProcessAffinity;
 #elif __OpenBSD__
 	int mib[2], core_count = 0;
 	int dwProcessAffinity = 0;
@@ -88,13 +88,13 @@ void getnumthreads()
 	int dwProcessAffinity = 0;
 	int32_t core_count = 0;
 #endif
-	// size_t len = sizeof(dwProcessAffinity);
-	// if (numthreads > 0)
-	// 	return;
+	size_t len = sizeof(dwProcessAffinity);
+	if (numthreads > 0)
+		return;
 #ifdef _WIN32
 	GetProcessAffinityMask(GetCurrentProcess(), &dwProcessAffinity, &dwSystemAffinity);
 #elif __linux__
-	// sched_getaffinity(0, len, &dwProcessAffinity);
+	sched_getaffinity(0, len, &dwProcessAffinity);
 	{
 		printf("In else part against linux 98****************************** \n");
 	}
@@ -116,22 +116,22 @@ void getnumthreads()
 		numthreads = core_count;
 	}
 #endif
-// 	for (unsigned int i = 0; i < len * 8; i++)
-// #if defined(_WIN32)
-// #if defined(_MSC_VER)
-// 		if (dwProcessAffinity & (1i64 << i))
-// #else // CYGWIN/MINGW
-// 		if (dwProcessAffinity & (1ULL << i))
-// #endif
-// #elif defined __linux__
-// 		if (CPU_ISSET(i, &dwProcessAffinity))
-// #else
-// 		if (dwProcessAffinity & (1 << i))
-// #endif
-// 			numthreads++;
-// 	if (numthreads == 0) // something failed
-// 		numthreads = 1;
-// 	printf("Number of threads: %i\n", (int)numthreads);
+	for (unsigned int i = 0; i < len * 8; i++)
+#if defined(_WIN32)
+#if defined(_MSC_VER)
+		if (dwProcessAffinity & (1i64 << i))
+#else // CYGWIN/MINGW
+		if (dwProcessAffinity & (1ULL << i))
+#endif
+#elif defined __linux__
+		if (CPU_ISSET(i, &dwProcessAffinity))
+#else
+		if (dwProcessAffinity & (1 << i))
+#endif
+			numthreads++;
+	if (numthreads == 0) // something failed
+		numthreads = 1;
+	printf("Number of threads: %i\n", (int)numthreads);
 }
 
 extern "C" EXPORT unsigned long long BitmessagePOW(unsigned char * starthash, unsigned long long target)
