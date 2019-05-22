@@ -78,7 +78,6 @@ void getnumthreads()
 #ifdef _WIN32
 	DWORD_PTR dwProcessAffinity, dwSystemAffinity;
 #elif __linux__
-	printf("I am in Linus *************************** 81 \n");
 	cpu_set_t dwProcessAffinity;
 #elif __OpenBSD__
 	int mib[2], core_count = 0;
@@ -96,7 +95,6 @@ void getnumthreads()
 #elif __linux__
 	sched_getaffinity(0, len, &dwProcessAffinity);
 	{
-		printf("In else part against linux 98****************************** \n");
 	}
 #elif __OpenBSD__
 	len2 = sizeof(core_count);
@@ -107,12 +105,10 @@ void getnumthreads()
 #else
 	if (sysctlbyname("hw.logicalcpu", &core_count, &len, 0, 0) == 0)
 	{
-		printf("Inside sysctlbyname at line 106 ********************* \n ");
 		numthreads = core_count;
 	}
 	else if (sysctlbyname("hw.ncpu", &core_count, &len, 0, 0) == 0)
 	{
-		printf("Inside sysctlbyname at line 111 ********************* \n");
 		numthreads = core_count;
 	}
 #endif
@@ -131,16 +127,13 @@ void getnumthreads()
 			numthreads++;
 	if (numthreads == 0) // something failed
 		numthreads = 1;
-	printf("Number of threads: %i\n", (int)numthreads);
 }
 
 extern "C" EXPORT unsigned long long BitmessagePOW(unsigned char * starthash, unsigned long long target)
 {
 	successval = 0;
-	printf("max_val Line 139 debug please****************************** \n");
 	max_val = target;
 	getnumthreads();
-	printf("At line 138 ************************************* \n");
 	initialHash = (unsigned char *)starthash;
 #   ifdef _WIN32
 	HANDLE* threads = (HANDLE*)calloc(sizeof(HANDLE), numthreads);
@@ -170,10 +163,8 @@ extern "C" EXPORT unsigned long long BitmessagePOW(unsigned char * starthash, un
 	for (unsigned int i = 0; i < numthreads; i++) {
 		pthread_join(threads[i], NULL);
 	}
-	printf("In else part against WIN32 ****************************** \n");
 #   endif
 	free(threads);
 	free(threaddata);
-	printf("End at line 176 ******************************* \n");
 	return successval;
 }
