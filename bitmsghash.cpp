@@ -94,8 +94,6 @@ void getnumthreads()
 	GetProcessAffinityMask(GetCurrentProcess(), &dwProcessAffinity, &dwSystemAffinity);
 #elif __linux__
 	sched_getaffinity(0, len, &dwProcessAffinity);
-	{
-	}
 #elif __OpenBSD__
 	len2 = sizeof(core_count);
 	mib[0] = CTL_HW;
@@ -104,13 +102,9 @@ void getnumthreads()
 		numthreads = core_count;
 #else
 	if (sysctlbyname("hw.logicalcpu", &core_count, &len, 0, 0) == 0)
-	{
 		numthreads = core_count;
-	}
 	else if (sysctlbyname("hw.ncpu", &core_count, &len, 0, 0) == 0)
-	{
 		numthreads = core_count;
-	}
 #endif
 	for (unsigned int i = 0; i < len * 8; i++)
 #if defined(_WIN32)
@@ -152,7 +146,7 @@ extern "C" EXPORT unsigned long long BitmessagePOW(unsigned char * starthash, un
 #   else
 		pthread_create(&threads[i], NULL, threadfunc, (void*)&threaddata[i]);
 #   ifdef __linux__
-		pthread_setschedparam(threads[i], 0, &schparam);
+		pthread_setschedparam(threads[i], SCHED_IDLE, &schparam);
 #   else
 		pthread_setschedparam(threads[i], SCHED_RR, &schparam);
 #   endif
@@ -167,5 +161,6 @@ extern "C" EXPORT unsigned long long BitmessagePOW(unsigned char * starthash, un
 #   endif
 	free(threads);
 	free(threaddata);
+	printf("Value od suucessvalue in liune 000000 ********************%lu",successval);
 	return successval;
 }
