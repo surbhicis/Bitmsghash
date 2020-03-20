@@ -18,7 +18,7 @@ libbitmsghash.so: bitmsghash.o
 	${CXX} bitmsghash.o -shared -fPIC -lcrypto $(LDFLAGS)
 
 bitmsghash.o:
-	${CXX} -Wall -O3 -march=armv2a -fPIC $(CCFLAGS) -c bitmsghash.cpp
+	${CXX} -Wall -O3 -march=ARMv8 -fPIC $(CCFLAGS) -c bitmsghash.cpp
 
 clean:
 	rm -f bitmsghash.o libbitmsghash.so bitmsghash*.dll
